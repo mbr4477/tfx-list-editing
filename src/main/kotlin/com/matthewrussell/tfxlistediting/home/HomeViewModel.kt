@@ -10,16 +10,14 @@ class HomeViewModel : ViewModel() {
     val pojoItems = FXCollections.observableArrayList<String>()
 
     init {
-        items.addAll(
-                listOf("Property 1", "Property 2", "Property 3").map { SimpleStringProperty(it) }
-        )
+        items.addAll((1..30).map { SimpleStringProperty(it.toString()) })
         items.map {
             it.addListener { _, old, new ->
                 println("$old -> $new")
             }
         }
 
-        pojoItems.addAll(listOf("POJO 1", "POJO 2", "POJO 3"))
+        pojoItems.addAll((1..30).map { it.toString() })
     }
 
     fun saveAll() {

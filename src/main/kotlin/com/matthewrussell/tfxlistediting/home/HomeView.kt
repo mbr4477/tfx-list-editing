@@ -1,5 +1,6 @@
 package com.matthewrussell.tfxlistediting.home
 
+import javafx.beans.property.SimpleStringProperty
 import javafx.event.EventHandler
 import javafx.scene.control.ListView
 import tornadofx.*
@@ -15,12 +16,11 @@ class HomeView : View() {
             isEditable = true
             cellFragment(StringPropertyCell::class)
             // No need to explicitly update the value
-
         }
         listview(viewModel.pojoItems) {
             isEditable = true
             onEditCommit = EventHandler<ListView.EditEvent<String>> {
-                // Need to explicity update the value
+                // Need to explicitly update the value
                 items[it.index] = it.newValue
             }
             cellFragment(StringCell::class)
@@ -28,6 +28,12 @@ class HomeView : View() {
         button("Save") {
             action {
                 viewModel.saveAll()
+            }
+        }
+        button("Add") {
+            action {
+                viewModel.items.add(SimpleStringProperty("New Element"))
+                viewModel.pojoItems.add("New Element")
             }
         }
     }

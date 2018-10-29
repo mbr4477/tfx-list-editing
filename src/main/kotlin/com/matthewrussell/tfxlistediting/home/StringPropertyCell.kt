@@ -46,10 +46,14 @@ class StringPropertyCell : ListCellFragment<StringProperty>() {
     }
 
     init {
-        itemProperty.onChange {
-            if (it != null) {
-                textField.textProperty().bindBidirectional(it)
-                textLabel.textProperty().bind(it)
+        itemProperty.addListener { _, old, new ->
+            if (old != null) {
+                textField.textProperty().unbindBidirectional(old)
+                textLabel.textProperty().unbind()
+            }
+            if (new != null) {
+                textField.textProperty().bindBidirectional(new)
+                textLabel.textProperty().bind(new)
             }
         }
     }
